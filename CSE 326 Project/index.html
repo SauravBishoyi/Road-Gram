@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoadGRAMS - Road Maintenance Grievance Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" onclick="showSection('home')">RoadGRAMS</a>
+      <nav class="nav-links">
+        <a href="#home" onclick="showSection('home')">Overview</a>
+        <a href="#track" onclick="showSection('track')">Track Status</a>
+        <a href="#register" onclick="showSection('register')">Public Register</a>
+        <a href="#officer" onclick="showSection('officer')">Officer Desk</a>
+      </nav>
+      <button class="btn-primary" onclick="showSection('lodge')">Lodge Grievance</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. OVERVIEW SECTION -->
+    <section id="section-home" class="page-section active">
+      <div class="hero-box">
+        <p class="kicker">Public Works Road Maintenance Portal</p>
+        <h1>Report road damage and track repairs transparently.</h1>
+        <p class="subtitle">
+          A citizen grievance redressal portal for reporting potholes,
+          broken streetlights, blocked roadside drains, and damaged road signage.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showSection('lodge')">Lodge a Grievance</button>
+          <button class="btn-secondary" onclick="showSection('track')">Track by Registration ID</button>
+        </div>
+      </div>
+
+      <!-- Live Statistics Strip -->
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-label">Total Grievances</span>
+          <strong id="stat-total" class="stat-value">0</strong>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Resolved</span>
+          <strong id="stat-resolved" class="stat-value text-green">0</strong>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">In Progress</span>
+          <strong id="stat-progress" class="stat-value text-amber">0</strong>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Pending Inspection</span>
+          <strong id="stat-pending" class="stat-value text-navy">0</strong>
+        </div>
+      </div>
+
+      <!-- 3-Step Redressal Process -->
+      <div class="steps-section">
+        <h2>How Redressal Works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <h3>01. Lodge Grievance</h3>
+            <p>Submit the exact road location, ward, issue category, and description to get a unique Registration ID.</p>
+          </div>
+          <div class="step-card">
+            <h3>02. Site Inspection</h3>
+            <p>The assigned Public Works Junior Engineer inspects the road stretch and logs an official field remark.</p>
+          </div>
+          <div class="step-card">
+            <h3>03. Repair & Closure</h3>
+            <p>Track repair progress online until closure and verify completion using your Registration ID.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LODGE GRIEVANCE FORM SECTION -->
+    <section id="section-lodge" class="page-section">
+      <h2>Lodge a Road Maintenance Grievance</h2>
+      <p class="section-desc">Fill in accurate location details so the assigned PWD division can locate the road stretch quickly.</p>
+
+      <form id="grievance-form" class="card-panel">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="citizenName">Citizen Full Name *</label>
+            <input type="text" id="citizenName" required placeholder="e.g. Aarav Sharma" />
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobile Number (10 Digits) *</label>
+            <input type="tel" id="mobile" required pattern="[0-9]{10}" maxlength="10" placeholder="e.g. 9876543210" />
+          </div>
+          <div class="form-group">
+            <label for="ward">Ward / Sector *</label>
+            <input type="text" id="ward" required placeholder="e.g. Ward 14 - Sector 14" />
+          </div>
+          <div class="form-group">
+            <label for="pincode">PIN Code *</label>
+            <input type="text" id="pincode" required pattern="[0-9]{6}" maxlength="6" placeholder="e.g. 110014" />
+          </div>
+          <div class="form-group">
+            <label for="roadName">Road / Highway Name *</label>
+            <input type="text" id="roadName" required placeholder="e.g. MG Road Main Corridor" />
+          </div>
+          <div class="form-group">
+            <label for="landmark">Nearest Landmark *</label>
+            <input type="text" id="landmark" required placeholder="e.g. Near Government Polytechnic Gate" />
+          </div>
+          <div class="form-group">
+            <label for="category">Issue Category *</label>
+            <select id="category" required>
+              <option value="Pothole & Surface Crack">Pothole & Surface Crack</option>
+              <option value="Road Resurfacing Needed">Road Resurfacing Needed</option>
+              <option value="Broken Streetlight">Broken Streetlight</option>
+              <option value="Waterlogging & Blocked Drain">Waterlogging & Blocked Drain</option>
+              <option value="Damaged Divider & Signage">Damaged Divider & Signage</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="severity">Severity Level *</label>
+            <select id="severity" required>
+              <option value="Routine">Routine</option>
+              <option value="Moderate" selected>Moderate</option>
+              <option value="Urgent Hazard">Urgent Hazard</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="description">Detailed Description of Road Damage *</label>
+          <textarea id="description" rows="4" required placeholder="Describe approximate size of pothole, number of faulty lights, or traffic hazard..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Submit Grievance</button>
+          <button type="reset" class="btn-secondary">Clear Form</button>
+        </div>
+      </form>
+
+      <!-- Acknowledgement Receipt (Shown after submission) -->
+      <div id="receipt-box" class="card-panel hidden">
+        <p class="kicker text-green">Grievance Registered Successfully</p>
+        <h3>Acknowledgement Receipt</h3>
+        <p>Your unique CPGRAMS-style Registration Number is:</p>
+        <p id="receipt-id" class="mono-id"></p>
+        <p id="receipt-summary" class="subtitle"></p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="trackLastSubmitted()">Track This Grievance</button>
+          <button class="btn-secondary" onclick="window.print()">Print Receipt</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TRACK STATUS SECTION -->
+    <section id="section-track" class="page-section">
+      <h2>Track Grievance Status</h2>
+      <p class="section-desc">Enter your Registration Number (for example, <code>RDGRM/2026/00101</code>) to check live status and officer remarks.</p>
+
+      <div class="search-bar">
+        <input type="text" id="track-input" placeholder="Enter Registration ID (e.g. RDGRM/2026/00101)" />
+        <button class="btn-primary" onclick="trackGrievance()">Track Status</button>
+      </div>
+
+      <div id="track-result" class="card-panel hidden"></div>
+      <p id="track-error" class="error-msg hidden">No grievance found with that Registration Number.</p>
+    </section>
+
+    <!-- 4. PUBLIC REGISTER SECTION -->
+    <section id="section-register" class="page-section">
+      <div class="section-head-row">
+        <div>
+          <h2>Public Grievance Register</h2>
+          <p class="section-desc">Browse and filter all reported road maintenance complaints.</p>
+        </div>
+        <select id="filter-status" onchange="renderRegisterTable()">
+          <option value="All">All Statuses</option>
+          <option value="Received">Received</option>
+          <option value="Under Inspection">Under Inspection</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Registration ID</th>
+              <th>Road & Ward</th>
+              <th>Category</th>
+              <th>Filed On</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="register-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. OFFICER DESK SECTION -->
+    <section id="section-officer" class="page-section">
+      <h2>Officer Redressal Desk (Demo)</h2>
+      <p class="section-desc">Update complaint status and add inspection remarks as a Public Works officer.</p>
+
+      <div class="card-panel">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="officer-select-id">Select Grievance *</label>
+            <select id="officer-select-id"></select>
+          </div>
+          <div class="form-group">
+            <label for="officer-status">New Status *</label>
+            <select id="officer-status">
+              <option value="Received">Received</option>
+              <option value="Under Inspection">Under Inspection</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <label for="officer-remark">Official Inspection / Action Remark *</label>
+          <textarea id="officer-remark" rows="3" placeholder="e.g. Site inspected; bitumen repair crew scheduled for tomorrow morning."></textarea>
+        </div>
+        <button class="btn-primary" onclick="updateOfficerStatus()">Update Grievance Status</button>
+        <p id="officer-msg" class="text-green hidden" style="margin-top: 12px;">Status updated successfully.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>RoadGRAMS</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
